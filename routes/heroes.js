@@ -1,13 +1,16 @@
 const express = require("express")
 const app = express()
 const passport = require("../config/passport")
+const { verifyUser } = require("../middlewares/auth")
 
-app.get(`/heroes`, (req, res) => {
-  if (!req.user) {
-    res.status(401).send('Unauthorized')
+const heroes = [
+  {
+    name: "Batman"
   }
-  
-  res.status(200)
+]
+
+app.get(`/`, verifyUser, (req, res) => {  
+  res.json(heroes)
 })
 
 module.exports = app
